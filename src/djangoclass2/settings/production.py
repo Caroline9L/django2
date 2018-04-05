@@ -32,7 +32,7 @@ if not settings.DEBUG:
 	# SECURITY WARNING: don't run with debug turned on in production!
 	DEBUG = False
 
-	ALLOWED_HOSTS = ['caro-django-18.herokuapp.com']
+	ALLOWED_HOSTS = ['*', 'caro-django-18.herokuapp.com']
 
 	EMAIL_HOST = 'smtp.gmail.com'
 	EMAIL_HOST_USER = 'claportacrossroads@gmail.com'
