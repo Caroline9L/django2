@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+{% block head_title %}Welcome | {{ block.super }} {% endblock head_title %}
+
+<style>
+{% block style %}
+	.jumbotron {
+		background-color: rgba(85, 16, 214);
+		color: #fff;
+	}
+{% endblock style %}
+</style>
+
+{% block jumbotron %}
+	{% if not request.user.is_authenticated %}
+
+		<div class="jumbotron">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<!-- <div class="jumbotron"> -->
+							<div class="container">
+								<h1 class="display-3">Hello, world!</h1>
+								<p class="lead text-align-center">This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and
+									three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+								<p>
+									<a class="btn btn-primary btn-lg" href="#" role="button">Join Us »</a>
+								</p>
+							</div>
+						</div>
+					<!-- </div> -->
+					<div class="col-sm-3">
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>	
+					<!-- <img src="{% static 'img/happy-puppy.png' %}" alt="" class="img-fluid" /> -->
+				</div>
+				</div>
+			</div>
+		</div>
+
+	 {% endif %}
+{% endblock %}
+
+{% block content %}
+	{% if request.user.is_authenticated %}
+		<div class="row">
+			<div class='col-sm-4 offset-sm-2 mb-5'>
+				<h1>You are logged in</h1>
+					{% if queryset %}
+						<h2>Welcome Staff</h2>
+						<table class="table">
+							{% for instance in queryset %}
+								<tr>
+									<td>{{ forloop.counter }}</td><td>{{ instance.email }}</td><td>{{ instance.full_name }}</td><td>{{ instance.timestamp | timesince}} ago</td>
+								</tr>
+								{% if instance.email == "test@test.edu" %}
+								<tr>
+									<td>is equal</td>
+								</tr>
+								{% endif %}
+							{% endfor %}
+						</table>
+					{% endif %}
+			</div>
+		</div>
+	{% else %}
+		<div class="row">
+			<div class='col-sm-4 offset-sm-2 mb-5'>
+				<p class='lead text-align-center'>Built with Django &amp; Bootstrap <i class="fas fa-box-open"></i></p>
+				<img src="{% static 'img/happy-puppy.png' %}" alt="" class="img-fluid" />
+			</div>
+			<div class="col-sm-4 mb-5">
+				<h3>
+					{{ title }}
+				</h3>
+
+				<form action="" method="POST">{% csrf_token %}
+
+					{{ form|crispy }} <!--#.as_p-->
+					<input class="btn btn-primary" type="submit" value="Sign Up">
+
+				</form>
+				<br>
+				<span class="fa-stack fa-lg fa-5x">
+					<!-- <i class="fas fa-spinner fa-stack-2x fa-spin"></i> -->
+					<i class="fas fa-spinner fa-stack-2x"></i>
+					<i class="fab fa-github fa-stack-1x" style="color:rgba(85, 16, 214)"></i>
+				</span>
+				<!-- <i class="fas fa-snowflake fa-5x fa-spin"></i> -->
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
